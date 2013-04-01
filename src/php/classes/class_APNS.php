@@ -88,7 +88,7 @@ class APNS {
 	* @var string
 	* @access private
 	*/
-	private $certificate = '/usr/local/apns/apns.pem';
+	private $certificate = '/Applications/MAMP/htdocs/whyteboard_util/LovePush/Certificates/LovePush.pem';
 
 	/**
 	* Apples Production APNS Gateway
@@ -112,7 +112,7 @@ class APNS {
 	* @var string
 	* @access private
 	*/
-	private $sandboxCertificate = '/usr/local/apns/apns-dev.pem'; // change this to your development certificate absolute path
+	private $sandboxCertificate = '/Applications/MAMP/htdocs/whyteboard_util/LovePush/Certificates/LovePush.pem'; // change this to your development certificate absolute path
 
 	/**
 	* Apples Sandbox APNS Gateway
@@ -418,7 +418,7 @@ class APNS {
 	 */
 	private function _iterateMessages($sql) {
 		if($result = $this->db->query($sql)){
-			//var_dump ($result);
+			var_dump ($result);
 			if($result->num_rows){
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 					$pid = $this->db->prepare($row['pid']);
@@ -454,6 +454,7 @@ class APNS {
 		$this->sslStreams[$development] = stream_socket_client($this->apnsData[$development]['ssl'], $error, $errorString, 100, (STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT), $ctx);
 		if(!$this->sslStreams[$development]){
 			$this->_triggerError("Failed to connect to APNS: {$error} {$errorString}.");
+			var_dump ("Failed to connect to APNS: {$error} {$errorString}.");
 			unset($this->sslStreams[$development]);
 			return false;
 		}
